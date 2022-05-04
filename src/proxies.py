@@ -34,9 +34,9 @@ def update_proxies(proxies_file, previous_proxies):
     if not proxies:
         if previous_proxies:
             proxies = previous_proxies
-            logger.warning(f'{cl.MAGENTA}Буде використано попередній список проксі{cl.RESET}')
+            logger.warning(f'{cl.MAGENTA}The previous proxy list will be used{cl.RESET}')
         else:
-            logger.error(f'{cl.RED}Не знайдено робочих проксі - зупиняємо атаку{cl.RESET}')
+            logger.error(f'{cl.RED}No working proxies found - attack stopping{cl.RESET}')
             exit()
 
     return proxies
@@ -45,14 +45,14 @@ def update_proxies(proxies_file, previous_proxies):
 def load_provided_proxies(proxies_file):
     content = read_or_fetch(proxies_file)
     if content is None:
-        logger.warning(f'{cl.RED}Не вдалося зчитати проксі з {proxies_file}{cl.RESET}')
+        logger.warning(f'{cl.RED}Could not read proxy from file {proxies_file}{cl.RESET}')
         return None
 
     proxies = ProxyUtiles.parseAll([prox for prox in content.split()])
     if not proxies:
-        logger.warning(f'{cl.RED}У {proxies_file} не знайдено проксі - перевірте формат{cl.RESET}')
+        logger.warning(f'{cl.RED}У {proxies_file} no proxy found - check file format and try again.{cl.RESET}')
     else:
-        logger.info(f'{cl.YELLOW}Зчитано {cl.BLUE}{len(proxies)}{cl.YELLOW} проксі{cl.RESET}')
+        logger.info(f'{cl.YELLOW}Read {cl.BLUE}{len(proxies)}{cl.YELLOW} proxy{cl.RESET}')
     return proxies
 
 
@@ -64,9 +64,9 @@ def load_system_proxies():
         proxies = []
     if proxies:
         logger.info(
-            f'{cl.YELLOW}Отримано вибірку {cl.BLUE}{len(proxies):,}{cl.YELLOW} проксі '
-            f'зі списку {cl.BLUE}25.000+{cl.YELLOW} робочих{cl.RESET}'
+            f'{cl.YELLOW}Sample received {cl.BLUE}{len(proxies):,}{cl.YELLOW} proxy '
+            f'from the list {cl.BLUE}25.000+{cl.YELLOW} workers{cl.RESET}'
         )
     else:
-        logger.warning(f'{cl.RED}Не вдалося отримати персональну вибірку проксі{cl.RESET}')
+        logger.warning(f'{cl.RED}Failed to get personal proxy sample{cl.RESET}')
     return proxies

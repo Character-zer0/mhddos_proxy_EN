@@ -83,7 +83,7 @@ class Targets:
 
         config_content = read_or_fetch(self.config)
         if config_content is None:
-            logger.warning(f'{cl.MAGENTA}Не вдалося (пере)завантажити конфіг{cl.RESET}')
+            logger.warning(f'{cl.MAGENTA}Failed to (re)config{cl.RESET}')
             return
 
         config_targets = []
@@ -92,5 +92,5 @@ class Targets:
             if target and not target.startswith('#'):
                 config_targets.append(target)
 
-        logger.info(f'{cl.YELLOW}Завантажено конфіг {self.config} на {cl.BLUE}{len(config_targets)} цілей{cl.RESET}')
+        logger.info(f'{cl.YELLOW}Config downloaded {self.config} on {cl.BLUE}{len(config_targets)} Targets{cl.RESET}')
         self.config_targets = config_targets

@@ -32,8 +32,8 @@ def show_statistic(
             ))
         else:
             logger.info(
-                f'{cl.YELLOW}Ціль:{cl.BLUE} %s,{cl.YELLOW} Порт:{cl.BLUE} %s,{cl.YELLOW} Метод:{cl.BLUE} %s,'
-                f'{cl.YELLOW} Запити:{cl.BLUE} %s/s,{cl.YELLOW} Трафік:{cl.BLUE} %s/s{cl.RESET}' %
+                f'{cl.YELLOW}Target:{cl.BLUE} %s,{cl.YELLOW} Port:{cl.BLUE} %s,{cl.YELLOW} Method:{cl.BLUE} %s,'
+                f'{cl.YELLOW} Requests:{cl.BLUE} %s/s,{cl.YELLOW} Traffic:{cl.BLUE} %s/s{cl.RESET}' %
                 (
                     params.target.url.host,
                     params.target.url.port,
@@ -44,19 +44,19 @@ def show_statistic(
             )
 
     if table:
-        tabulate_text.append((f'{cl.GREEN}Усього', '', '', Tools.humanformat(total_pps) + "/s",
+        tabulate_text.append((f'{cl.GREEN}Total', '', '', Tools.humanformat(total_pps) + "/s",
                               f'{Tools.humanbits(total_bps)}/s{cl.RESET}'))
 
         cls()
         print(tabulate(
             tabulate_text,
-            headers=[f'{cl.BLUE}Ціль', 'Порт', 'Метод', 'Запити', f'Трафік{cl.RESET}'],
+            headers=[f'{cl.BLUE}Target', 'Port', 'Method', 'Requests', f'Traffic{cl.RESET}'],
             tablefmt='fancy_grid'
         ))
         print_banner(use_my_ip)
     else:
         logger.info(
-            f'{cl.GREEN}Усього:{cl.YELLOW} Запити:{cl.GREEN} %s/s,{cl.YELLOW} Трафік:{cl.GREEN} %s/s{cl.RESET}' %
+            f'{cl.GREEN}Total:{cl.YELLOW} Requests:{cl.GREEN} %s/s,{cl.YELLOW} Traffic:{cl.GREEN} %s/s{cl.RESET}' %
             (
                 Tools.humanformat(total_pps),
                 Tools.humanbits(total_bps),
@@ -67,22 +67,22 @@ def show_statistic(
 
 
 def print_progress(time_left, proxies_cnt, use_my_ip):
-    logger.info(f'{cl.YELLOW}Новий цикл через: {cl.BLUE}{time_left} секунд{cl.RESET}')
+    logger.info(f'{cl.YELLOW}New cycle through: {cl.BLUE}{time_left} seconds{cl.RESET}')
     if proxies_cnt:
-        logger.info(f'{cl.YELLOW}Кількість проксі: {cl.BLUE}{proxies_cnt}{cl.RESET}')
+        logger.info(f'{cl.YELLOW}Number of proxies: {cl.BLUE}{proxies_cnt}{cl.RESET}')
         if use_my_ip:
-            logger.info(f'{cl.YELLOW}Атака також використовує {cl.MAGENTA}ваш IP разом з проксі{cl.RESET}')
+            logger.info(f'{cl.YELLOW}The attack also uses {cl.MAGENTA}your IP along with the proxy{cl.RESET}')
     else:
-        logger.info(f'{cl.YELLOW}Атака {cl.MAGENTA}без проксі{cl.YELLOW} - використовується тільки ваш IP{cl.RESET}')
+        logger.info(f'{cl.YELLOW}Attack {cl.MAGENTA}without a proxy{cl.YELLOW} - only your IP is used{cl.RESET}')
 
 
 def print_banner(use_my_ip):
     print(f'''
-- {cl.YELLOW}Навантаження (кількість потоків){cl.RESET} - параметр `-t 3000`, за замовчуванням - CPU * {THREADS_PER_CORE}
-- {cl.YELLOW}Статистика у вигляді таблиці або тексту{cl.RESET} - прапорець `--table` або `--debug`
-- {cl.YELLOW}Повна документація{cl.RESET} - https://github.com/porthole-ascend-cinnamon/mhddos_proxy
+- {cl.YELLOW}Load (number of flows){cl.RESET} - parameter `-t 3000`, default - CPU * {THREADS_PER_CORE}
+- {cl.YELLOW}Statistics in the form of a table or text{cl.RESET} - the `--table` or` --debug` flags
+- {cl.YELLOW}Complete documentation{cl.RESET} - https://github.com/porthole-ascend-cinnamon/mhddos_proxy
     ''')
 
     if not use_my_ip:
         print(
-            f'        {cl.MAGENTA}Використовувати свій IP або VPN {cl.YELLOW}на додачу до проксі - прапорець `--vpn`{cl.RESET}\n')
+            f'        {cl.MAGENTA}Use your IP or a VPN {cl.YELLOW}in addition to the proxy - flag `--vpn`{cl.RESET}\n')

@@ -18,7 +18,7 @@ class DaemonThreadPool(Executor):
             try:
                 Thread(target=self._worker, daemon=True).start()
             except RuntimeError:
-                logger.error(f'{cl.RED}Не вдалося запустити атаку - вичерпано ліміт потоків системи{cl.RESET}')
+                logger.error(f'{cl.RED}Failed to launch attack - system flow limit exhausted{cl.RESET}')
                 exit()
         return self
 

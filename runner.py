@@ -92,13 +92,13 @@ def run_flooders(num_threads, switch_after) -> List[Flooder]:
 
     if not threads:
         logger.error(
-            f'{cl.RED}Не вдалося запустити атаку - вичерпано ліміт потоків системи{cl.RESET}')
+            f'{cl.RED}Failed to launch attack - system flow limit exhausted{cl.RESET}')
         exit()
 
     if len(threads) < num_threads:
         logger.warning(
-            f"{cl.RED}Не вдалося запустити усі {num_threads} потоків - "
-            f"лише {len(threads)}{cl.RESET}")
+            f"{cl.RED}Failed to start all{num_threads} streams - "
+            f"only {len(threads)}{cl.RESET}")
 
     return threads
 
@@ -139,11 +139,11 @@ def run_ddos(
         container.append(kwargs)
         if not (table or debug):
             logger.info(
-                f'{cl.YELLOW}Атакуємо ціль:{cl.BLUE} %s,{cl.YELLOW} Порт:{cl.BLUE} %s,{cl.YELLOW} Метод:{cl.BLUE} %s{cl.RESET}'
+                f'{cl.YELLOW}Attacking the target:{cl.BLUE} %s,{cl.YELLOW} Port:{cl.BLUE} %s,{cl.YELLOW} Method:{cl.BLUE} %s{cl.RESET}'
                 % (params.target.url.host, params.target.url.port, params.method)
             )
 
-    logger.info(f'{cl.GREEN}Запускаємо атаку...{cl.RESET}')
+    logger.info(f'{cl.GREEN}Attacking the target...{cl.RESET}')
     if not (table or debug):
         # Keep the docs/info on-screen for some time before outputting the logger.info above
         time.sleep(5)
@@ -200,7 +200,7 @@ def start(args):
 
     for bypass in ('CFB', 'DGB'):
         if bypass in args.http_methods:
-            logger.warning(f'{cl.RED}Робота методу {bypass} не гарантована{cl.RESET}')
+            logger.warning(f'{cl.RED}Method work {bypass} not guaranteed{cl.RESET}')
 
     if args.itarmy:
         targets_iter = Targets([], IT_ARMY_CONFIG_URL)
@@ -223,12 +223,12 @@ def start(args):
     while True:
         if is_old_version:
             print(
-                f'{cl.RED}! ЗАПУЩЕНА НЕ ОСТАННЯ ВЕРСІЯ - ОНОВІТЬСЯ{cl.RESET}: https://telegra.ph/Onovlennya-mhddos-proxy-04-16\n')
+                f'{cl.RED}!!YOU NOT RUNNING THE LATEST VERSION - UPDATED VERSION{cl.RESET}: https://telegra.ph/Onovlennya-mhddos-proxy-04-16\n')
 
         while True:
             targets = list(targets_iter)
             if not targets:
-                logger.error(f'{cl.RED}Не вказано жодної цілі для атаки{cl.RESET}')
+                logger.error(f'{cl.RED}No target is specified for the attack{cl.RESET}')
                 exit()
 
             targets = resolve_all_targets(targets, dns_executor)
@@ -237,13 +237,13 @@ def start(args):
                 break
             else:
                 logger.warning(
-                    f'{cl.RED}Не знайдено жодної доступної цілі - чекаємо 30 сек до наступної перевірки{cl.RESET}')
+                    f'{cl.RED}No available targets found - please wait 30 seconds for the next check{cl.RESET}')
                 time.sleep(30)
 
         if args.rpc < LOW_RPC:
             logger.warning(
-                f'{cl.YELLOW}RPC менше за {LOW_RPC}. Це може призвести до падіння продуктивності '
-                f'через збільшення кількості перепідключень{cl.RESET}'
+                f'{cl.YELLOW}RPC less than {LOW_RPC}. This can lead to a drop in productivity '
+                f'due to an increase in the number of reconnections{cl.RESET}'
             )
 
         current_use_my_ip = use_my_ip
@@ -274,4 +274,4 @@ if __name__ == '__main__':
     try:
         start(init_argparse().parse_args())
     except KeyboardInterrupt:
-        logger.info(f'{cl.BLUE}Завершуємо роботу...{cl.RESET}')
+        logger.info(f'{cl.BLUE}process is finishing...{cl.RESET}')
